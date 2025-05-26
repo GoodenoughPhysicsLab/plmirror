@@ -11,7 +11,6 @@ class SqliteGuard:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type is None:
-            self.conn.commit()
-            self.cursor.close()
-            self.conn.close()
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()

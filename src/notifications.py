@@ -6,11 +6,6 @@ from utils import db_guard
 from utils import constants
 
 if __name__ == "__main__":
-    user = pl.web.token_login(
-        token="dqQXBDflrOYV4a82HMbNjFtz9k3C5hWL",
-        auth_code="aUKltj1Nq7JOz0EWHDnXoYP6fk3G4rRd",
-    )
-
     with db_guard.SqliteGuard(
         os.path.join(constants.DB_DIR, "notifications.db")
     ) as guard:
@@ -37,7 +32,7 @@ if __name__ == "__main__":
 
         try:
             for i, msg in enumerate(
-                pl.web.NotificationsIter(user, category_id=5, max_retry=3)
+                pl.web.NotificationsIter(constants.user, category_id=5, max_retry=3)
             ):
                 sql = f"""
                     INSERT INTO notification_table (
