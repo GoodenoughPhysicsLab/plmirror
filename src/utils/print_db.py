@@ -1,9 +1,9 @@
 import argparse
 import db_guard
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--db_path', help='path of the database file')
+    parser.add_argument("--db_path", help="path of the database file")
     args = parser.parse_args()
 
     with db_guard.SqliteGuard(args.db_path) as guard:
@@ -25,5 +25,5 @@ if __name__ == '__main__':
             rows = cursor.fetchall()
             print("data of table:")
             for i, row in enumerate(rows):
-                print(i, ':', row)
+                print(i, ":", row)
             print("-" * 50)
