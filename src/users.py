@@ -1,12 +1,11 @@
 import os
 import time
 import physicsLab as pl
-from datetime import datetime
 from utils import constants
 from utils import db_guard
 
-with open(os.path.join(constants.SRC_DIR, "all_id")) as f:
-    all_user_id = eval(f.read())
+if not os.path.exists(os.path.join(constants.DB_DIR, "users.db")):
+    raise FileExistsError("users.db already exists")
 
 if __name__ == "__main__":
     with db_guard.SqliteGuard(os.path.join(constants.DB_DIR, "users.db")) as guard:
@@ -42,6 +41,9 @@ if __name__ == "__main__":
             )
         """
         )
+
+        cursor.execute("SELECT UserID FROM user_table")
+        all_user_id: set[str] = {row[0] for row in cursor.fetchall()}
 
         for i, a_user_id in enumerate(all_user_id):
             print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} :: i/{len(all_user_id)}: {a_user_id}")
